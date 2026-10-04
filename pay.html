@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Strait — Pay</title>
+<meta name="description" content="Pay anyone with any coin. They receive USDC in one transaction.">
+<meta name="theme-color" content="#FAFAF8">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pay with Strait">
+<meta property="og:description" content="Pay with any coin you hold. They receive USDC in one transaction.">
+<meta property="og:image" content="__ORIGIN__/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="__ORIGIN__/assets/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/fav-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="stylesheet" href="/css/s.css">
+</head>
+<body>
+<div class="strip" id="strip"></div>
+<header class="nav always">
+  <div class="wrap">
+    <a class="home" href="/" aria-label="Strait home"><img src="/assets/mark.svg" alt=""><span>Strait</span></a>
+    <nav class="links">
+      <a href="/#how">How it works</a>
+      <a href="/#quote">Quote</a>
+      <a href="/#request">Request</a>
+      <a href="/#proof">Proof</a>
+      <a href="/docs">Docs</a>
+      <a href="#" data-x target="_blank" rel="noopener">X</a>
+      <a class="pay on" href="/pay">Pay</a>
+    </nav>
+    <span></span>
+  </div>
+</header>
+<span id="live" class="sr" aria-live="polite"></span>
+
+<main class="app">
+  <div class="map"><img src="/assets/topo.svg" alt=""></div>
+  <div class="col">
+    <h1 class="rv" id="title">Pay anyone. <span class="dim">With any coin.</span></h1>
+    <p class="sub rv" style="--d:.05s" id="sub">They receive USDC in one transaction. Nobody holds your money in between.</p>
+
+    <div class="panel rv" style="--d:.1s" id="sWho">
+      <div id="whoForm">
+        <label class="field"><span>Pay to</span>
+          <div class="input" id="toBox"><input id="to" autocomplete="off" spellcheck="false" placeholder="Their Solana wallet address" aria-label="Recipient wallet"></div>
+        </label>
+        <label class="field"><span>Amount</span>
+          <div class="input big" id="amtBox"><span class="pre">$</span><input id="amt" inputmode="decimal" autocomplete="off" placeholder="0.00" aria-label="Amount in dollars"></div>
+        </label>
+        <label class="field"><span>Note</span>
+          <div class="input"><input id="note" maxlength="60" autocomplete="off" placeholder="What it's for (optional)" aria-label="Note"></div>
+        </label>
+      </div>
+      <div id="whoCard" hidden>
+        <div class="who-card">
+          <div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M15 14.5h3"/></svg></div>
+          <div class="t"><b id="whoAddr"></b><span id="whoState">Checking the address…</span></div>
+          <div class="amt" id="whoAmt"></div>
+        </div>
+        <div class="note-line" id="whoNote" hidden></div>
+        <div class="hint"><button class="btn light sm" id="editWho" type="button">Change</button></div>
+      </div>
+      <div class="err" id="whoErr"></div>
+    </div>
+
+    <div class="panel rv" style="--d:.14s" id="sPay">
+      <div class="eyebrow" style="margin-bottom:14px">Pay with <span class="st mono" id="acctLine"></span></div>
+      <div id="walletBox"></div>
+      <div id="holdBox" hidden>
+        <div class="input" style="height:46px"><input id="filter" autocomplete="off" placeholder="Search your coins" aria-label="Search your coins"></div>
+        <div class="hold" id="hold"></div>
+      </div>
+      <div id="quoteBox" hidden>
+        <div class="result" style="margin-top:20px">
+          <div class="k">You spend</div>
+          <div class="v" id="qSpend"></div>
+          <div class="rows" id="qRows"></div>
+        </div>
+      </div>
+      <div style="margin-top:22px"><button class="btn dark" id="payBtn" type="button" style="width:100%;height:56px;font-size:16px" disabled>Pay</button></div>
+      <div class="statusline" id="status" hidden></div>
+      <div class="err" id="err"></div>
+    </div>
+
+    <div class="panel" id="sDone" hidden></div>
+  </div>
+</main>
+<script type="module" src="/js/pay.js"></script>
+</body>
+</html>
