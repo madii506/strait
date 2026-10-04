@@ -1,8 +1,10 @@
 // Home: rotating headline, the live quote card, the quote calculator, the request maker, the proof feed.
 import { CONFIG, $, $$, esc, B58, short, usd, amt, ago, hue, getJ, quoteFor, tokens, routeHTML, copy, boot } from './core.js';
 import { current } from './current.js';
+import { motion, countTo } from './motion.js';
 
 boot();
+motion();
 current($('#current'));
 
 const KNOWN = [
@@ -34,16 +36,17 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 (() => {
   const body = $('#qbody'), dots = $('#qdots'), live = $('#qlive'), card = $('#qcard');
   const AMT = 50, coins = KNOWN.slice(0, 4);
-  let data = [], idx = 0, paused = false, timer = 0;
+  let data = [], idx = 0, paused = false, timer = 0, prevAmt = 0;
   const show = (i, instant) => {
     const d = data[i]; if (!d) return;
     const paint = () => {
       body.innerHTML = `<div class="ask">Pay <b>${usd(AMT)}</b> with <b>${esc(d.c.symbol)}</b></div>
-        <div class="big">${amt(d.inAmt)}<small>${esc(d.c.symbol)}</small></div>
+        <div class="big"><span class="cnt" data-v="${prevAmt}">${amt(prevAmt || d.inAmt)}</span><small>${esc(d.c.symbol)}</small></div>
         <div class="route">${routeHTML(d.quote, d.c.symbol)}</div>
         <div class="gets"><span>They receive</span><b>${d.exact ? 'exactly ' : 'at least '}${usd(AMT)} USDC</b></div>
         <div class="meta"><span>impact ${(Number(d.quote.priceImpactPct || 0) * 100).toFixed(2)}%</span><span data-age="${d.t}">${ago(d.t)}</span></div>`;
       body.classList.remove('fade');
+      countTo(body.querySelector('.cnt'), d.inAmt, amt, 700); prevAmt = d.inAmt;
     };
     if (instant) paint(); else { body.classList.add('fade'); setTimeout(paint, 420); }
     $$('button', dots).forEach((b, k) => b.classList.toggle('on', k === i));
